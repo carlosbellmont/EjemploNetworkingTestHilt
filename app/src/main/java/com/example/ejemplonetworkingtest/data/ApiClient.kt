@@ -22,7 +22,13 @@ interface ServicesApiInterface {
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
-    private const val API_BASE_URL = "https://fedeperin-harry-potter-api.herokuapp.com"
+    //private const val API_BASE_URL = "https://fedeperin-harry-potter-api.herokuapp.com"
+
+    @Singleton
+    @Provides
+    fun getBaseUrl(): String {
+        return "https://fedeperin-harry-potter-api.herokuapp.com"
+    }
 
     @Singleton
     @Provides
@@ -43,7 +49,7 @@ object ApiModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl(API_BASE_URL)
+        .baseUrl(getBaseUrl())
         .client(okHttpClient)
         .build()
 
